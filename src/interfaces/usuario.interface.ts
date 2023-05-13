@@ -2,15 +2,16 @@ import { factura } from "./factura.interface";
 import { pedido } from "./pedido.interface";
 
 export interface usuario {
-  nombre: string;
-  email: string;
+  username: String;
+  nombre: String;
+  email: String;
   telefono: number;
-  contraseña: string;
-  departamento: string;
-  ciudad: string;
-  direccion: string;
-  complemento: string;
-  codigoPostal: string;
+  contraseña: String;
+  departamento: String;
+  ciudad: String;
+  direccion: String;
+  complemento: String;
+  codigoPostal: String;
   facturas: factura[];
   pedidos: pedido[];
 }
