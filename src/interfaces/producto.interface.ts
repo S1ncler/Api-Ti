@@ -1,9 +1,9 @@
 export interface producto{
     name: string;
-    brand: string;
-    description: string;
+    marca: string;
+    descripcion: string;
     price: number;
-    images: string[];
-    category: string;
+    image: string[];
+    categoria: string;
     stock: number;
 }

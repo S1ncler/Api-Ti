@@ -1,7 +1,4 @@
 import { Schema, Types, model, Model } from "mongoose";
-import { usuario } from "../interfaces/usuario.interface";
-import { json } from "express";
-import * as factura  from '../interfaces/factura.interface';
 
 const ItemSchema = new Schema(
     {
