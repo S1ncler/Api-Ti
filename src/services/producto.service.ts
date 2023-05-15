@@ -13,14 +13,14 @@ const get_productos = async () => {
 
 const get_producto = async (id: string) => {
   const responseProductos = await ProductoModel.findOne({
-    _id: id,
+    id: Number(id),
   });
   return responseProductos;
 };
 
 const update_producto = async (id: string, data: producto) => {
   const responseProductos = await ProductoModel.findOneAndUpdate(
-    { _id: id },
+    { id: id },
     data,
     { new: true}
   );
@@ -29,7 +29,7 @@ const update_producto = async (id: string, data: producto) => {
 
 const delete_producto = async (id: string) => {
   const responseProductos = await ProductoModel.findOneAndRemove({
-    _id: id,
+    id: id,
   });
   return responseProductos;
 };

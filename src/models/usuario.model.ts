@@ -4,7 +4,8 @@ const ItemSchema = new Schema(
     {
         username: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         nombre: {
             type: String,
@@ -12,7 +13,8 @@ const ItemSchema = new Schema(
         },
         email: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         telefono: {
             type: Number,

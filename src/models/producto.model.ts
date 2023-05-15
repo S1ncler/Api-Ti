@@ -1,11 +1,11 @@
 import { Schema, Types, model, Model } from "mongoose";
-import { producto } from "../interfaces/producto.interface";
 
 const ProductoSchema = new Schema(
     {
         id: {
             type: Number,
-            required: true
+            required: true,
+            unique: true
         },
         name: {
             type: String,
