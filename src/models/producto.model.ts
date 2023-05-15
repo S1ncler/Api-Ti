@@ -3,6 +3,10 @@ import { producto } from "../interfaces/producto.interface";
 
 const ProductoSchema = new Schema(
     {
+        id: {
+            type: Number,
+            required: true
+        },
         name: {
             type: String,
             required: true

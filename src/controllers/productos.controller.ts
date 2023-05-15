@@ -32,6 +32,7 @@ export const updateProducto = async ({ params, body }: Request, res: Response) =
 
 export const postProducto = async ({ body }: Request, res: Response) => {
   try {
+    console.log(body);
     const response = await insert_producto(body);
     res.status(200).send(response);
   } catch (e) {
