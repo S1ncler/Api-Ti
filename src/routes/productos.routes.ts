@@ -17,6 +17,7 @@ router.get("/", getProductos);
 router.get("/marcas", getMarcas);
 router.get("/categorias", getCategorias);
 router.get("/r", getRandomProductos);
+router.post("/r", getRandomProductos);
 router.get("/:id", logMiddleware, getProducto);
 router.post("/", postProducto);
 router.put("/:id", updateProducto);

@@ -53,8 +53,9 @@ export const getRandomProductos = async ({ body }: Request, res: Response) => {
   try {
     const { cantidad, ids, marca, categoria } = body;
     const response = await get_random_productos(cantidad, ids, marca, categoria);
-    res.status(200).send(response);
+    res.status(200).json(response);
   } catch (e) {
+    console.log(e);
     handleHttp(res, `ERROR_GET_PRODUCTOS=${e}`);
   }
 };
