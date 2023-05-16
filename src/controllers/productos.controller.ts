@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { handleHttp } from "../utils/error.handle";
-import { delete_producto, get_producto, get_productos, insert_producto, update_producto } from "../services/producto.service";
+import { delete_producto, get_producto, get_productos, insert_producto, update_producto, get_random_productos, get_marcas, get_categorias } from "../services/producto.service";
 
 export const getProducto = async ({ params }: Request, res: Response) => {
   try {
@@ -46,5 +46,34 @@ export const deleteProducto = async ({ params }: Request, res: Response) => {
     res.status(200).send(response);
   } catch (e) {
     handleHttp(res, `ERROR_DELETE_PRODUCTO=${e}`);
+  }
+};
+
+export const getRandomProductos = async ({ body }: Request, res: Response) => {
+  try {
+    const { cantidad, ids, marca, categoria } = body;
+    const response = await get_random_productos(cantidad, ids, marca, categoria);
+    res.status(200).send(response);
+  } catch (e) {
+    handleHttp(res, `ERROR_GET_PRODUCTOS=${e}`);
+  }
+};
+
+export const getMarcas = async ({ body }: Request, res: Response) => {
+  try {
+    const { cant } = body;
+    const response = await get_marcas(cant);
+    res.status(200).send(response);
+  } catch (e) {
+    handleHttp(res, `ERROR_GET_PRODUCTOS=${e}`);
+  }
+};
+
+export const getCategorias = async (req: Request, res: Response) => {
+  try {
+    const response = await get_categorias();
+    res.status(200).send(response);
+  } catch (e) {
+    handleHttp(res, `ERROR_GET_PRODUCTOS=${e}`);
   }
 };
