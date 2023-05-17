@@ -17,7 +17,7 @@ const ItemSchema = new Schema(
             unique: true
         },
         telefono: {
-            type: Number,
+            type: String,
             required: true
         },
         contraseña: {
@@ -47,6 +47,17 @@ const ItemSchema = new Schema(
         },
         pedidos: {
             type: Array
+        },
+        rol: {
+            type: String,
+            required: true,
+            enum: ["Admin", "user"]
+        },
+        metodosDePago: {
+            type: String,
+        },
+        activo: {
+            type: Boolean
         }
     },
     {
