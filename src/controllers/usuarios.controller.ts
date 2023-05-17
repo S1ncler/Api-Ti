@@ -11,7 +11,7 @@ import {
 export const getUsuario = async ({ params }: Request, res: Response) => {
   try {
     const response = await getusuario(params.username);
-    const data = response ? response : "NOT_FOUND";
+    const data = response ? response : {msg: "NOT_FOUND"};
     res.status(200).send(data);
   } catch (e) {
     handleHttp(res, `ERROR_GET_USUARIO=${e}`);
@@ -47,8 +47,8 @@ export const postUsuario = async ({ body }: Request, res: Response) => {
 
 export const deleteUsuario = async ({ params }: Request, res: Response) => {
   try {
-    const response = deleteusuario(params.username);
-    res.status(200).send(response);
+    const response = await deleteusuario(params.username);
+    res.status(200).json({msg: response});
   } catch (e) {
     handleHttp(res, `ERROR_DELETE_USUARIO=${e}`);
   }

@@ -16,11 +16,15 @@ const ItemSchema = new Schema(
             required: true,
             unique: true
         },
+        cumpleanos: {
+            type: Date,
+            required: true
+        },
         telefono: {
             type: String,
             required: true
         },
-        contraseña: {
+        contrasena: {
             type: String,
             required: true
         },
@@ -51,13 +55,15 @@ const ItemSchema = new Schema(
         rol: {
             type: String,
             required: true,
-            enum: ["Admin", "user"]
+            enum: ["Admin", "User"],
+            default: "User"
         },
         metodosDePago: {
-            type: String,
+            type: Array,
         },
         activo: {
-            type: Boolean
+            type: Boolean,
+            default: true
         }
     },
     {

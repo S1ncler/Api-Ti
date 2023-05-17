@@ -31,7 +31,7 @@ const deleteusuario = async (username: string) => {
   const responseUsuarios = await UsuarioModel.findOneAndRemove({
     username: username,
   });
-  return responseUsuarios;
+  return responseUsuarios === null ? "No se encontro el usuario": "Usuario eliminado correctamente";
 };
 
 export {

@@ -2,8 +2,9 @@ export interface auth {
     username: string;
     nombre: string;
     email: string;
-    telefono: number;
-    contraseña: string;
+    cumpleanos: Date;
+    telefono: string;
+    contrasena: string;
     departamento: string;
     ciudad: string;
     direccion: string;
