@@ -9,7 +9,8 @@ const registerNewUser = async (authUser: usuario) => {
   const checkIs2 = await UsuarioModel.findOne({ username: authUser.username });
   if (checkIs) return "ALREADY_USER";
   if (checkIs2) return "ALREADY_USER";
-  if (new Date(authUser.cumpleanos) > new Date('2005-01-01')) return "MUST_BE_AN_ADULT";
+  
+  if (new Date(authUser.cumpleanos) > new Date(new Date().getTime() - (1000 * 60 * 60 * 24 * 365 * 18))) return "MUST_BE_AN_ADULT";
   const passHash = await encrypt(authUser.contrasena);
   authUser.contrasena = passHash;
   const responseInsert = await UsuarioModel.create(authUser);
