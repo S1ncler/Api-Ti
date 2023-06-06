@@ -2,8 +2,10 @@ import { producto } from "../interfaces/producto.interface";
 import ProductoModel from "../models/producto.model";
 
 const insert_producto = async (producto: producto) => {
+  let ultimoId = await ProductoModel.find().sort({'id': -1}).limit(1);
+  producto.id = ultimoId[0].id + 1;
   const responseInsert = await ProductoModel.create(producto);
-  return responseInsert;
+  return responseInsert? {msg: 'Producto creado correctamente'}: {msg: responseInsert};
 };
 
 const get_productos = async () => {
@@ -15,7 +17,7 @@ const get_producto = async (id: string) => {
   const responseProductos = await ProductoModel.findOne({
     id: Number(id),
   });
-  return responseProductos;
+  return responseProductos ? {msg: responseProductos} : {msg: 'No encontrado'};
 };
 
 const update_producto = async (id: string, data: producto) => {
@@ -24,14 +26,14 @@ const update_producto = async (id: string, data: producto) => {
     data,
     { new: true }
   );
-  return responseProductos;
+  return responseProductos ? {msg: 'Producto actualizado correctamente'} : {msg: responseProductos};
 };
 
 const delete_producto = async (id: string) => {
   const responseProductos = await ProductoModel.findOneAndRemove({
     id: id,
   });
-  return responseProductos;
+  return responseProductos ? {msg: "Producto eliminado correctamente"} : {msg: responseProductos};
 };
 
 const get_random_productos = async (
