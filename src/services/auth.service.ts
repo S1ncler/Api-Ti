@@ -1,8 +1,7 @@
-import { response } from "express";
 import { usuario } from "../interfaces/usuario.interface";
 import UsuarioModel from "../models/usuario.model";
 import { encrypt, verified } from "../utils/bcrypt.handle";
-import { generateToken } from "../utils/jwt.handle";
+import { generateToken, verifyToken } from "../utils/jwt.handle";
 
 const registerNewUser = async (authUser: usuario) => {  
   const checkIs = await UsuarioModel.findOne({ email: authUser.email });
@@ -31,4 +30,9 @@ const loginUser = async (email: string, pass: string) => {
   return data;
 };
 
-export { registerNewUser, loginUser };
+const validarToken = async (token: string) => {
+  const isToken = await verifyToken(token);
+  return isToken;
+};
+
+export { registerNewUser, loginUser, validarToken };
