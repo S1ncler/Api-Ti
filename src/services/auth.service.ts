@@ -30,4 +30,9 @@ const loginUser = async (email: string, pass: string) => {
   return data;
 };
 
-export { registerNewUser, loginUser };
+const validarToken = async (token: string) => {
+  const isToken = await verifyToken(token);
+  return isToken;
+};
+
+export { registerNewUser, loginUser, validarToken };
