@@ -8,5 +8,6 @@ router.get("/:username", controllers.Usuarios.getUsuario);
 router.post("/", controllers.Usuarios.postUsuario);
 router.put("/:username", controllers.Usuarios.updateUsuario);
 router.delete("/:username", controllers.Usuarios.deleteUsuario);
+router.delete("/:_id", controllers.Usuarios.deleteUsuario);
 
 export { router };

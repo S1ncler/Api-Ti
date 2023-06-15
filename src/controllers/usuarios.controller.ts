@@ -47,7 +47,8 @@ export const postUsuario = async ({ body }: Request, res: Response) => {
 
 export const deleteUsuario = async ({ params }: Request, res: Response) => {
   try {
-    const response = await deleteusuario(params.username);
+    // const response = await deleteusuario(params.username);
+    const response = await deleteusuario(params._id);
     res.status(200).json({msg: response});
   } catch (e) {
     handleHttp(res, `ERROR_DELETE_USUARIO=${e}`);
