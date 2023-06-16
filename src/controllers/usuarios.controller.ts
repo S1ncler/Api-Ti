@@ -31,14 +31,14 @@ export const getUsuarios = async (req: Request, res: Response) => {
   }
 };
 
-// export const updateUsuario = async ({ body, params }: Request, res: Response) => {
-//   try {
-//     const response = await updateusuario(params.username, body);
-//     res.status(200).send(response);
-//   } catch (e) {
-//     handleHttp(res, `ERROR_UPDATE_USUARIO=${e}`);
-//   }
-// };
+export const updateUsuario = async ({ body, params }: Request, res: Response) => {
+  try {
+    const response = await updateusuario(params.username, body);
+    res.status(200).send(response);
+  } catch (e) {
+    handleHttp(res, `ERROR_UPDATE_USUARIO=${e}`);
+  }
+};
 export const updateUser = async (req: Express.Request, res: Express.Response) => {
   try {
     
