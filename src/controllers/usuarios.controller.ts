@@ -7,6 +7,8 @@ import {
   updateusuario,
   deleteusuario,
 } from "../services/usuario.service";
+import Express from "express";
+import Usermodel from "../models/usuario.model"
 
 export const getUsuario = async ({ params }: Request, res: Response) => {
   try {
@@ -27,14 +29,27 @@ export const getUsuarios = async (req: Request, res: Response) => {
   }
 };
 
-export const updateUsuario = async ({ body, params }: Request, res: Response) => {
+// export const updateUsuario = async ({ body, params }: Request, res: Response) => {
+//   try {
+//     const response = await updateusuario(params.username, body);
+//     res.status(200).send(response);
+//   } catch (e) {
+//     handleHttp(res, `ERROR_UPDATE_USUARIO=${e}`);
+//   }
+// };
+export const updateUser = async (req: Express.Request, res: Express.Response) => {
   try {
-    const response = await updateusuario(params.username, body);
-    res.status(200).send(response);
-  } catch (e) {
-    handleHttp(res, `ERROR_UPDATE_USUARIO=${e}`);
+    
+    let {dataToUpdate, _id} = req.body
+    const updatedData = await Usermodel.findByIdAndUpdate(_id, dataToUpdate)
+    return res.status(200).json ({msg: "Usuario actualizado"})
+
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ msg: "Ha ocurrido un error", error });
   }
-};
+
+}
 
 export const postUsuario = async ({ body }: Request, res: Response) => {
   try {
