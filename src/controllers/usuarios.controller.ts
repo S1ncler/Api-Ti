@@ -6,7 +6,8 @@ import {
   getusuario,
   updateusuario,
   deleteusuario,
-  updateusuarioByID
+  updateusuarioByID,
+  deleteUserByID
 } from "../services/usuario.service";
 
 export const getUsuario = async ({ params }: Request, res: Response) => {
@@ -56,8 +57,18 @@ export const postUsuario = async ({ body }: Request, res: Response) => {
 
 export const deleteUsuario = async ({ params }: Request, res: Response) => {
   try {
+    const response = await deleteusuario(params.username);
+    res.status(200).json({msg: response});
+  } catch (e) {
+    handleHttp(res, `ERROR_DELETE_USUARIO=${e}`);
+  }
+};
+
+
+export const deleteUserById = async ({ params }: Request, res: Response) => {
+  try {
     // const response = await deleteusuario(params.username);
-    const response = await deleteusuario(params._id);
+    const response = await deleteUserByID(params._id);
     res.status(200).json({msg: response});
   } catch (e) {
     handleHttp(res, `ERROR_DELETE_USUARIO=${e}`);
