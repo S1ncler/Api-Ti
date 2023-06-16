@@ -6,6 +6,7 @@ import {
   getusuario,
   updateusuario,
   deleteusuario,
+  updateusuarioByID
 } from "../services/usuario.service";
 
 export const getUsuario = async ({ params }: Request, res: Response) => {
@@ -30,6 +31,14 @@ export const getUsuarios = async (req: Request, res: Response) => {
 export const updateUsuario = async ({ body, params }: Request, res: Response) => {
   try {
     const response = await updateusuario(params.username, body);
+    res.status(200).send(response);
+  } catch (e) {
+    handleHttp(res, `ERROR_UPDATE_USUARIO=${e}`);
+  }
+};
+export const updateUsuarioById = async ({ body, params }: Request, res: Response) => {
+  try {
+    const response = await updateusuarioByID(params._id, body);
     res.status(200).send(response);
   } catch (e) {
     handleHttp(res, `ERROR_UPDATE_USUARIO=${e}`);

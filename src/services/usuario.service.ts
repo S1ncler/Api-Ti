@@ -27,10 +27,17 @@ const updateusuario = async (username: string, data: usuario) => {
   return responseUsuarios;
 };
 
-const deleteusuario = async (username: string) => {
-  const responseUsuarios = await UsuarioModel.findOneAndRemove({
-    username: username,
-  });
+const updateusuarioByID = async (_id: string, data: usuario) => {
+  const responseUsuarios = await UsuarioModel.findOneAndUpdate(
+    { _id: _id },
+    data,
+    { new: true}
+  );
+  return responseUsuarios;
+};
+
+const deleteusuario = async (_id: string) => {
+  const responseUsuarios = await UsuarioModel.findByIdAndRemove(_id);
   return responseUsuarios === null ? "No se encontro el usuario": "Usuario eliminado correctamente";
 };
 
@@ -40,4 +47,5 @@ export {
   getusuario,
   updateusuario,
   deleteusuario,
+  updateusuarioByID
 };
