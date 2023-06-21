@@ -1,6 +1,6 @@
 import { Request, Response, query } from "express";
 import { handleHttp } from "../utils/error.handle";
-import { loginUser, registerNewUser, validarToken } from "../services/auth.service";
+import { loginUser, registerNewUser, validarToken, forgPassword } from "../services/auth.service";
 
 export const registerCtrl = async ({ body }: Request, res: Response) => {
   try {
@@ -31,5 +31,18 @@ export const valToken = async ({ body }: Request, res: Response) => {
     
   } catch (e) {
     handleHttp(res, `ERROR_VALIDATING_TOKEN=${e}`);
+  }
+};
+
+export const forgPass = async ({ body }: Request, res: Response) => {
+  try {
+    const { email, link } = body
+    if(email === undefined || email === "") res.status(401).send({msg: "email vacio"});
+    if(link === undefined || link === "") res.status(401).send({msg: "link vacio"});
+    const response = await forgPassword(email, link);
+    response === true ? res.status(200).send({msg: "Email sended ok"}): res.status(401).send({msg: "error sending email"});
+    
+  } catch (e) {
+    handleHttp(res, `ERROR_SENDING_EMAIL=${e}`);
   }
 };

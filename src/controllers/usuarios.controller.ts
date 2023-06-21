@@ -10,7 +10,7 @@ import {
 
 export const getUsuario = async ({ params }: Request, res: Response) => {
   try {
-    const response = await getusuario(params.username);
+    const response = await getusuario(params.email);
     const data = response ? response : {msg: "NOT_FOUND"};
     res.status(200).send(data);
   } catch (e) {
