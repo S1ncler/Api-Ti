@@ -11,9 +11,9 @@ const getUsuarioss = async () => {
   return responseUsuarios;
 };
 
-const getusuario = async (username: string) => {
+const getusuario = async (email: string) => {
   const responseUsuarios = await UsuarioModel.findOne({
-    username: username,
+    email: email,
   });
   return responseUsuarios;
 };
