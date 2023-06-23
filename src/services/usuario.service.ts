@@ -1,5 +1,6 @@
 import { usuario } from "../interfaces/usuario.interface";
 import UsuarioModel from "../models/usuario.model";
+import { encrypt } from "../utils/bcrypt.handle";
 
 const insertUsuario = async (usuario: usuario) => {
   const responseInsert = await UsuarioModel.create(usuario);
@@ -19,6 +20,7 @@ const getusuario = async (email: string) => {
 };
 
 const updateusuario = async (username: string, data: usuario) => {
+  data.contrasena = await encrypt(data.contrasena);
   const responseUsuarios = await UsuarioModel.findOneAndUpdate(
     { username: username },
     data,

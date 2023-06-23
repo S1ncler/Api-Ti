@@ -6,5 +6,7 @@ const router = Router();
 router.post("/register", controllers.Auth.registerCtrl);
 router.post("/login", controllers.Auth.loginCtrl);
 router.post("/valtoken", controllers.Auth.valToken);
+router.post("/forgpass", controllers.Auth.forgPass);
+router.post("/updatepass", controllers.Auth.updatePass);
 
 export { router };
