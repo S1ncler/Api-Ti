@@ -22,7 +22,7 @@ const loginUser = async (email: string, pass: string) => {
   const passHash = user.contrasena || "";
   const isVerified = await verified(pass, passHash);
   if (!isVerified) return "INCORRECT_USER_DATA";
-  const token = await generateToken(user.email);
+  const token = await generateToken(user.username);
   const data = {
     token,
     usuario: user,
