@@ -7,7 +7,6 @@ import {
   verifyToken,
   generateTokenForgPass,
 } from "../utils/jwt.handle";
-import { Transporter } from "nodemailer";
 
 const registerNewUser = async (authUser: usuario) => {
   const checkIs = await UsuarioModel.findOne({ email: authUser.email });
@@ -59,9 +58,25 @@ const forgPassword = async (email: string, link: string) => {
         <br>
         <a href="${link}">${link}</a>`,
     });
-  }
-  else emailSended = false;
+  } else emailSended = false;
   return emailSended;
 };
 
-export { registerNewUser, loginUser, validarToken, forgPassword };
+const updatePassword = async (email: string, pass: string) => {
+  let updateOk = true;
+  const passHash = await encrypt(pass);
+  const user = await UsuarioModel.findOne({ email: email });
+  if (user) {
+    user.contrasena = passHash;
+    await UsuarioModel.findOneAndUpdate({ email: email }, user);
+  } else updateOk = false;
+  return updateOk;
+};
+
+export {
+  registerNewUser,
+  loginUser,
+  validarToken,
+  forgPassword,
+  updatePassword,
+};
