@@ -1,6 +1,15 @@
 import { Request, Response } from "express";
 import { handleHttp } from "../utils/error.handle";
-import { delete_producto, get_producto, get_productos, insert_producto, update_producto, get_random_productos, get_marcas, get_categorias } from "../services/producto.service";
+import {
+  delete_producto,
+  get_producto,
+  get_productos,
+  insert_producto,
+  update_producto,
+  get_random_productos,
+  get_marcas,
+  get_categorias,
+} from "../services/producto.service";
 
 export const getProducto = async ({ params }: Request, res: Response) => {
   try {
@@ -21,7 +30,10 @@ export const getProductos = async (req: Request, res: Response) => {
   }
 };
 
-export const updateProducto = async ({ params, body }: Request, res: Response) => {
+export const updateProducto = async (
+  { params, body }: Request,
+  res: Response
+) => {
   try {
     const response = await update_producto(params.id, body);
     res.status(200).send(response);
@@ -51,8 +63,14 @@ export const deleteProducto = async ({ params }: Request, res: Response) => {
 
 export const getRandomProductos = async ({ body }: Request, res: Response) => {
   try {
-    const { cantidad, ids, marca, categoria } = body;
-    const response = await get_random_productos(cantidad, ids, marca, categoria);
+    const { cantidad, ids, marca, categoria, criterion } = body;
+    const response = await get_random_productos(
+      cantidad,
+      ids,
+      marca,
+      categoria,
+      criterion
+    );
     res.status(200).json(response);
   } catch (e) {
     console.log(e);

@@ -2,10 +2,12 @@ import { producto } from "../interfaces/producto.interface";
 import ProductoModel from "../models/producto.model";
 
 const insert_producto = async (producto: producto) => {
-  let ultimoId = await ProductoModel.find().sort({'id': -1}).limit(1);
+  let ultimoId = await ProductoModel.find().sort({ id: -1 }).limit(1);
   producto.id = ultimoId[0].id + 1;
   const responseInsert = await ProductoModel.create(producto);
-  return responseInsert? {msg: 'Producto creado correctamente'}: {msg: responseInsert};
+  return responseInsert
+    ? { msg: "Producto creado correctamente" }
+    : { msg: responseInsert };
 };
 
 const get_productos = async () => {
@@ -17,7 +19,9 @@ const get_producto = async (id: string) => {
   const responseProductos = await ProductoModel.findOne({
     id: Number(id),
   });
-  return responseProductos ? {msg: responseProductos} : {msg: 'No encontrado'};
+  return responseProductos
+    ? { msg: responseProductos }
+    : { msg: "No encontrado" };
 };
 
 const update_producto = async (id: string, data: producto) => {
@@ -26,23 +30,44 @@ const update_producto = async (id: string, data: producto) => {
     data,
     { new: true }
   );
-  return responseProductos ? {msg: 'Producto actualizado correctamente'} : {msg: responseProductos};
+  return responseProductos
+    ? { msg: "Producto actualizado correctamente" }
+    : { msg: responseProductos };
 };
 
 const delete_producto = async (id: string) => {
   const responseProductos = await ProductoModel.findOneAndRemove({
     id: id,
   });
-  return responseProductos ? {msg: "Producto eliminado correctamente"} : {msg: responseProductos};
+  return responseProductos
+    ? { msg: "Producto eliminado correctamente" }
+    : { msg: responseProductos };
 };
 
 const get_random_productos = async (
   cant: number = 10,
   ids_ya_solicitados: number[] = [],
   marca: string = "",
-  categoria: string = ""
+  categoria: string = "",
+  criterion = ""
 ) => {
   let matchConditions = [];
+
+  if (criterion !== "") {
+    const regexPattern = criterion
+      .replace(/\s+/g, '\\s+') // Reemplaza los espacios por \\s+ en la expresión regular para permitir coincidencias con espacios entre palabras
+      .split('')
+      .map(char => `${char}.*`) // Añade .* después de cada carácter para permitir coincidencias aproximadas
+      .join('');
+    matchConditions.push({
+      $or: [
+        { descripcion: { $regex: regexPattern, $options: 'i' } },
+        { marca: { $regex: regexPattern, $options: 'i' } },
+        { categoria: { $regex: regexPattern, $options: 'i' } },        
+        { name: { $regex: regexPattern, $options: 'i' } }
+      ]
+    });
+  }
 
   if (marca !== "") {
     matchConditions.push({ marca: marca });
@@ -64,7 +89,7 @@ const get_marcas = async (cant: number = 0) => {
     responseProductos = await ProductoModel.aggregate([
       { $group: { _id: "$marca" } },
       { $limit: cant },
-      { $project: { _id: 0, marca: "$_id" } }
+      { $project: { _id: 0, marca: "$_id" } },
     ]);
   else responseProductos = await ProductoModel.distinct("marca");
   return responseProductos;
@@ -83,5 +108,5 @@ export {
   delete_producto,
   get_random_productos,
   get_marcas,
-  get_categorias,
+  get_categorias
 };
