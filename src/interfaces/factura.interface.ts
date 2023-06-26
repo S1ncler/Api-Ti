@@ -1,3 +1,6 @@
-export interface factura{
-    
+export interface factura {
+  precios: string[];
+  subtotal: string;
+  iva: string;
+  total: string;
 }

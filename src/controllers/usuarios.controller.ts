@@ -7,15 +7,16 @@ import {
   updateusuario,
   deleteusuario,
   updateusuarioByID,
-  deleteUserByID
+  deleteUserByID,
+  compra_servie,
 } from "../services/usuario.service";
 import Express from "express";
-import Usermodel from "../models/usuario.model"
+import Usermodel from "../models/usuario.model";
 
 export const getUsuario = async ({ params }: Request, res: Response) => {
   try {
     const response = await getusuario(params.email);
-    const data = response ? response : {msg: "NOT_FOUND"};
+    const data = response ? response : { msg: "NOT_FOUND" };
     res.status(200).send(data);
   } catch (e) {
     handleHttp(res, `ERROR_GET_USUARIO=${e}`);
@@ -31,7 +32,10 @@ export const getUsuarios = async (req: Request, res: Response) => {
   }
 };
 
-export const updateUsuario = async ({ body, params }: Request, res: Response) => {
+export const updateUsuario = async (
+  { body, params }: Request,
+  res: Response
+) => {
   try {
     const response = await updateusuario(params.username, body);
     res.status(200).send(response);
@@ -39,19 +43,23 @@ export const updateUsuario = async ({ body, params }: Request, res: Response) =>
     handleHttp(res, `ERROR_UPDATE_USUARIO=${e}`);
   }
 };
-export const updateUser = async (req: Express.Request, res: Express.Response) => {
+export const updateUser = async (
+  req: Express.Request,
+  res: Express.Response
+) => {
   try {
-    
-    let {dataToUpdate, _id} = req.body
-    const updatedData = await Usermodel.findByIdAndUpdate(_id, dataToUpdate)
-    return res.status(200).json ({msg: "Usuario actualizado"})
-
+    let { dataToUpdate, _id } = req.body;
+    const updatedData = await Usermodel.findByIdAndUpdate(_id, dataToUpdate);
+    return res.status(200).json({ msg: "Usuario actualizado" });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ msg: "Ha ocurrido un error", error });
   }
 };
-export const updateUsuarioById = async ({ body, params }: Request, res: Response) => {
+export const updateUsuarioById = async (
+  { body, params }: Request,
+  res: Response
+) => {
   try {
     const response = await updateusuarioByID(params._id, body);
     res.status(200).send(response);
@@ -72,18 +80,27 @@ export const postUsuario = async ({ body }: Request, res: Response) => {
 export const deleteUsuario = async ({ params }: Request, res: Response) => {
   try {
     const response = await deleteusuario(params.username);
-    res.status(200).json({msg: response});
+    res.status(200).json({ msg: response });
   } catch (e) {
     handleHttp(res, `ERROR_DELETE_USUARIO=${e}`);
   }
 };
 
-
 export const deleteUserById = async ({ params }: Request, res: Response) => {
   try {
     // const response = await deleteusuario(params.username);
     const response = await deleteUserByID(params._id);
-    res.status(200).json({msg: response});
+    res.status(200).json({ msg: response });
+  } catch (e) {
+    handleHttp(res, `ERROR_DELETE_USUARIO=${e}`);
+  }
+};
+
+export const compra_controller = async ({ body }: Request, res: Response) => {
+  try {
+    const { factura, pedido, email } = body;
+    const response = await compra_servie(factura, pedido, email);
+    res.status(200).json({ msg: response });
   } catch (e) {
     handleHttp(res, `ERROR_DELETE_USUARIO=${e}`);
   }
