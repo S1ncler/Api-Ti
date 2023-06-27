@@ -17,7 +17,7 @@ const ItemSchema = new Schema(
             unique: true
         },
         cumpleanos: {
-            type: Date,
+            type: String,
             required: true
         },
         telefono: {
