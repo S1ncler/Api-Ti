@@ -54,18 +54,17 @@ const get_random_productos = async (
   let matchConditions = [];
 
   if (criterion !== "") {
+    // busquedas no exactas, se descartan porque hay que ordenar los productos por orde
     const regexPattern = criterion
-      .replace(/\s+/g, '\\s+') // Reemplaza los espacios por \\s+ en la expresión regular para permitir coincidencias con espacios entre palabras
-      .split('')
-      .map(char => `${char}.*`) // Añade .* después de cada carácter para permitir coincidencias aproximadas
-      .join('');
+      .replace(/\s+/g, "\\s+") // Reemplaza los espacios por \\s+ en la expresión regular para permitir coincidencias con espacios entre palabras
+      .split("")
+      .map((char) => `${char}.*`) // Añade .* después de cada carácter para permitir coincidencias aproximadas
+      .join("");
     matchConditions.push({
       $or: [
-        { descripcion: { $regex: regexPattern, $options: 'i' } },
-        { marca: { $regex: regexPattern, $options: 'i' } },
-        { categoria: { $regex: regexPattern, $options: 'i' } },        
-        { name: { $regex: regexPattern, $options: 'i' } }
-      ]
+        { categoria: { $regex: criterion, $options: "i" } },
+        { descripcion: { $regex: criterion, $options: "i" } },        
+      ],
     });
   }
 
@@ -79,7 +78,7 @@ const get_random_productos = async (
   const responseProductos = await ProductoModel.aggregate([
     { $match: { $and: matchConditions } },
     { $sample: { size: cant } },
-  ]);
+  ])
   return responseProductos;
 };
 
@@ -108,5 +107,5 @@ export {
   delete_producto,
   get_random_productos,
   get_marcas,
-  get_categorias
+  get_categorias,
 };
