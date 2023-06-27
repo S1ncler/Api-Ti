@@ -67,6 +67,7 @@ const compra_servie = async (
     let product = await ProductoModel.findOne({id: item.id});
     if (product){
       product.stock --;
+      console.log(product)
       ProductoModel.findOneAndUpdate({id: item.id}, product);
     }    
   }
