@@ -65,9 +65,14 @@ const compra_servie = async (
   // resta los productos comprados del stock
   for(let item of pedido.productos){
     let product = await ProductoModel.findOne({id: item.id});
-    if (product){
-      product.stock --;
-      ProductoModel.findOneAndUpdate({id: item.id}, product);
+    if (product){    
+      product.stock = product.stock - 1;
+      if(product.stock < 0) return "sin stock";
+      await ProductoModel.findOneAndUpdate(
+        { id: product.id },
+        product,
+        { new: true }
+      );
     }    
   }
   // busca el usuario, guarda la factura y el pedido y luego guarda nuevamente el usuario
